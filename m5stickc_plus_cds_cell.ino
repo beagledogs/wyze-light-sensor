@@ -22,10 +22,14 @@ void setup() {
 }
 
 void loop() {
+  // Read the value from the CDS photocell
   int lightLevel = analogRead(CDS_PIN);
+//map the value from the cds to 1-100
   lightLevel = map(lightLevel, 0, 4095, 0, 100);
 
-  // Read the value from the CDS photocell
+
+//this section is for use when not remapping the cds cell output
+// Read the value from the CDS photocell
 //  int lightLevel = analogRead(CDS_PIN);
 //  if (lightLevel > 2000)digitalWrite(32, HIGH);
 //  else digitalWrite(32, LOW);
@@ -33,13 +37,15 @@ void loop() {
 //    if (lightLevel > 3500)digitalWrite(33, HIGH);
 //  else digitalWrite(33, LOW);
 
+
+//this section is for the mapped values
   if ((lightLevel > 20) && (lightLevel < 50)) {
       digitalWrite(32, HIGH),
         M5.Lcd.setTextColor(BLUE);
   } else digitalWrite(32, LOW),
     M5.Lcd.setTextColor(GREEN);
 
-    if ((lightLevel > 70) && (lightLevel < 101)) {
+    if ((lightLevel > 70) && (lightLevel < 95)) {
       digitalWrite(33, HIGH),
         M5.Lcd.setTextColor(RED);
   } else digitalWrite(33, LOW);
@@ -51,9 +57,10 @@ void loop() {
   M5.Lcd.setCursor(5, 20);
   M5.Lcd.printf("Pressure");
 
+
+//display battery level
   M5.Lcd.fillRect(100, 67, 70, 5, BLACK);
   M5.Lcd.fillRect(100, 67, ((M5.Axp.GetBatVoltage() - 3.0) * 70.0), 5, barcolor);
-//  delay(250);
   M5.Lcd.fillRect(10, 57, 70, 30, BLACK);
   M5.Lcd.setCursor(10, 57);
   M5.Lcd.setTextSize(3);
