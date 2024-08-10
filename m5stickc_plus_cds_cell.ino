@@ -39,32 +39,43 @@ void loop() {
 
 
 //this section is for the mapped values
-  if ((lightLevel > 20) && (lightLevel < 50)) {
-      digitalWrite(32, HIGH),
-        M5.Lcd.setTextColor(BLUE);
-  } else digitalWrite(32, LOW),
+//  if ((lightLevel > 20) && (lightLevel < 50)) {
+//      digitalWrite(32, HIGH),
+//        M5.Lcd.setTextColor(BLUE);
+//  } else digitalWrite(32, LOW),
+//    M5.Lcd.setTextColor(GREEN);
+
+    if ((lightLevel > 70) && (lightLevel < 101)) {
+      digitalWrite(33, HIGH),
+          M5.Lcd.setTextColor(BLUE);
+//        M5.Lcd.setTextColor(RED);
+  } else digitalWrite(33, LOW),
     M5.Lcd.setTextColor(GREEN);
 
-    if ((lightLevel > 70) && (lightLevel < 95)) {
-      digitalWrite(33, HIGH),
-        M5.Lcd.setTextColor(RED);
-  } else digitalWrite(33, LOW);
 
   // Display the light level on the screen
-  M5.Lcd.fillRect(160, 20, 70, 30, BLACK);
-  M5.Lcd.setCursor(160, 20);
+  M5.Lcd.fillRect(100, 50, 70, 30, BLACK);
+  M5.Lcd.setCursor(100, 50);
   M5.Lcd.printf("%d", lightLevel);
-  M5.Lcd.setCursor(5, 20);
-  M5.Lcd.printf("Pressure");
+  M5.Lcd.setCursor(25, 20);
+  M5.Lcd.printf("Light Level");
 
 
 //display battery level
-  M5.Lcd.fillRect(100, 67, 70, 5, BLACK);
-  M5.Lcd.fillRect(100, 67, ((M5.Axp.GetBatVoltage() - 3.0) * 70.0), 5, barcolor);
-  M5.Lcd.fillRect(10, 57, 70, 30, BLACK);
-  M5.Lcd.setCursor(10, 57);
+  M5.Lcd.fillRect(120, 97, 70, 5, BLACK);
+  M5.Lcd.fillRect(120, 97, ((M5.Axp.GetBatVoltage() - 3.0) * 70.0), 5, barcolor);
+  M5.Lcd.fillRect(30, 87, 70, 30, BLACK);
+  M5.Lcd.setCursor(30, 87);
   M5.Lcd.setTextSize(3);
   M5.Lcd.printf("%.2f", M5.Axp.GetBatVoltage());
+
+  if ((M5.Axp.GetBatVoltage() < 3.50) && (M5.Axp.GetBatVoltage() > 3.25)) {
+    barcolor = YELLOW;
+  } else if (M5.Axp.GetBatVoltage() < 3.25) {
+    barcolor = RED;
+  } else {
+    barcolor = GREEN;
+  }
 
 
   // Add a small delay to avoid flooding the screen with updates
